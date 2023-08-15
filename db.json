@@ -1,0 +1,37 @@
+{
+  "teamList": [
+    {
+      "id": 1,
+      "name": "Alex",
+      "email": "XXXXXXXXXXXX",
+      "position": "Frontend Developer",
+      "timezone": "Europe/Kiev",
+      "startWorkingHours": 10,
+      "endWorkingHours": 18,
+      "startAvailableHours": 9,
+      "endAvailableHours": 20
+    },
+    {
+      "id": 2,
+      "name": "Abe",
+      "email": "XXXXXXXXXXXX",
+      "position": "Full Stack Developer",
+      "timezone": "Asia/Kolkata",
+      "startWorkingHours": 10,
+      "endWorkingHours": 18,
+      "startAvailableHours": 9,
+      "endAvailableHours": 20
+    },
+    {
+      "id": 3,
+      "name": "Peter",
+      "email": "XXXXXXXXXXXX",
+      "position": "Designer",
+      "timezone": "America/New_York",
+      "startWorkingHours": 10,
+      "endWorkingHours": 18,
+      "startAvailableHours": 9,
+      "endAvailableHours": 20
+    }
+  ]
+}
