@@ -3,8 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { theme } from './styles/theme';
 import './styles/App.css';
 import './styles/fonts.css';
-import LayoutProvider from './pages/LayoutProvider';
 import CssBaseline from '@mui/material/CssBaseline';
+import Layout from './pages/Layout';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -21,11 +21,14 @@ const queryClient = new QueryClient({
 	},
 });
 const App = () => (
-	<div id="app">
+	<div
+		id="app"
+		style={{ height: '100vh' }}
+	>
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<QueryClientProvider client={queryClient}>
-				<LayoutProvider />
+				<Layout />
 			</QueryClientProvider>
 		</ThemeProvider>
 	</div>

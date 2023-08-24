@@ -1,5 +1,6 @@
 {
-  "name": "timezone",
+  "name": "timezone-app",
+  "homepage": "https://alex-oleks.github.io/timezone-app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,32 +8,26 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.4",
-    "@mui/x-date-pickers": "^6.11.1",
     "@tanstack/react-query": "^4.32.6",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "axios": "^1.4.0",
-    "date-fns": "^2.30.0",
-    "dayjs": "^1.11.9",
-    "formik": "^2.4.3",
-    "global": "^4.4.0",
-    "json-server": "^0.17.3",
+    "firebase": "^10.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "uuid": "^9.0.0",
-    "web-vitals": "^2.1.0",
-    "yup": "^1.2.0"
+    "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server:start": "npx json-server -w db.json --port 8000",
     "lint": "npx eslint .",
-    "lint:fix": "eslint --fix --ext .js,.jsx ."
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build --repo=https://github.com/alex-oleks/timezone-app.git"
   },
   "eslintConfig": {
     "extends": [
@@ -53,10 +48,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.1",
+    "gh-pages": "^6.0.0",
     "prettier": "^3.0.1",
     "pretty-quick": "^3.1.3"
   }

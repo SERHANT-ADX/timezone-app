@@ -1,50 +1,47 @@
-import Container from '@mui/material/Container';
-import CreateProfileModal from '../components/CreateProfileModal/CreateProfileModal';
 import TeammateSchedule from '../components/TeammateSchedule/TeammateSchedule';
-import { useAppProvider } from './LayoutProvider';
-import SetNameModal from '../components/SetNameModal/SetNameModal';
+import API from '../api/api';
+import { useEffect, useState } from 'react';
+import { db } from '../firebase/config';
+import { off, onValue, ref } from 'firebase/database';
 
 const Layout = () => {
-	const {
-		showCreateProfileModal,
-		setShowCreateProfileModal,
-		teammatesList,
-		isLoading,
-		isError,
-		error,
-		showSetNameModal,
-		setShowSetNameModal,
-		setUserName,
-		userName,
-		userTimezoneOffset,
-		createNewTeammate,
-	} = useAppProvider();
+	const [teamList, setTeamList] = useState([]);
+
+	const getTeammateList = async () => {
+		const team = await API.getTimezones();
+		setTeamList(team);
+		return team;
+	};
+
+	const addNewTeammate = async (newTeammate) => {
+		return await API.addNewTeammate(newTeammate);
+	};
+
+	useEffect(() => {
+		if (!teamList?.length) {
+			getTeammateList();
+		}
+
+		const teamListRef = ref(db, `teamTimeZones/`);
+		const onDataChange = (snapshot) => {
+			const data = snapshot.val();
+			const teamList = Object.values(data || {});
+
+			setTeamList(teamList || []);
+		};
+
+		onValue(teamListRef, onDataChange);
+
+		return () => {
+			off(teamListRef, onDataChange);
+		};
+	}, [setTeamList]);
 
 	return (
-		<>
-			<SetNameModal
-				showSetNameModal={showSetNameModal}
-				setShowSetNameModal={setShowSetNameModal}
-				setUserName={setUserName}
-			/>
-			<Container
-				maxWidth="100vw"
-				disableGutters={true}
-				sx={{ backgroundColor: '#fff', height: '100vh' }}
-			>
-				<CreateProfileModal
-					showCreateProfileModal={showCreateProfileModal}
-					setShowCreateProfileModal={setShowCreateProfileModal}
-					createNewTeammate={createNewTeammate}
-				/>
-				<TeammateSchedule
-					teammatesList={teammatesList}
-					userTimezoneOffset={userTimezoneOffset}
-					userName={userName}
-				/>
-				{/*<TeamCommonTime teamList={teammatesList} userName={userName}/>*/}
-			</Container>
-		</>
+		<TeammateSchedule
+			teamList={teamList}
+			addNewTeammate={addNewTeammate}
+		/>
 	);
 };
 
