@@ -22,4 +22,15 @@ export default class Api {
 		await set(teamRef, body);
 		return newTeammate;
 	}
+
+	static async updateTeammate(newTeammateBody, id) {
+		const teamRef = dbRef(db, `teamTimeZones/${id}`);
+		const body = {
+			...newTeammateBody,
+			id,
+		};
+
+		await set(teamRef, body);
+		return body;
+	}
 }

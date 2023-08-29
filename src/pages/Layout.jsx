@@ -17,6 +17,12 @@ const Layout = () => {
 		return await API.addNewTeammate(newTeammate);
 	};
 
+	const updateTeammate = async (newTeammate) => {
+		const existingPerson = teamList.find((person) => person.name === newTeammate.name);
+
+		return await API.updateTeammate(newTeammate, existingPerson.id);
+	};
+
 	useEffect(() => {
 		if (!teamList?.length) {
 			getTeammateList();
@@ -39,6 +45,7 @@ const Layout = () => {
 
 	return (
 		<TeammateSchedule
+			updateTeammate={updateTeammate}
 			teamList={teamList}
 			addNewTeammate={addNewTeammate}
 		/>

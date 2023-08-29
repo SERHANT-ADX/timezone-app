@@ -23,7 +23,7 @@ const queryClient = new QueryClient({
 const App = () => (
 	<div
 		id="app"
-		style={{ height: '100vh' }}
+		style={{ background: '#2A2E34' }}
 	>
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
