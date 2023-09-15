@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Autocomplete, Avatar, Box, Button, TextField, Typography } from '@mui/material';
+import React from 'react';
+import { Avatar, Box, Typography } from '@mui/material';
+import Form from '../Form/Form';
 
 var allTimeZones = {};
 var allTimeZonesArray = [];
@@ -24,22 +25,7 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 	const [hours, minutes] = londonTime.split(':').map(Number);
 	const leftOffsetGlobal = ((hours * 60 + minutes) * 100) / (24 * 60);
 
-	const [name, setName] = useState('');
-
-	const [startTime, setStartTime] = useState('');
-	const [endTime, setEndTime] = useState('');
-
-	const [value, setValue] = useState(allTimeZonesArray[0]);
-	const [inputValue, setInputValue] = useState('');
-
-	const handleAddNewPerson = async (isUpdating) => {
-		const body = {
-			name: name || 'Temp name',
-			timezone: value || 'Europe/London',
-			startWorkingHours: Math.round(parseFloat(startTime)) || '9',
-			endWorkingHours: Math.round(parseFloat(endTime)) || '18',
-		};
-
+	const handleAddNewPerson = async (body, isUpdating) => {
 		if (isUpdating) {
 			await updateTeammate(body);
 		} else {
@@ -229,179 +215,28 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 						);
 					})}
 				</Box>
-				<Box sx={{ marginTop: '20px' }}>
-					<Typography
-						sx={{ marginBottom: '20px' }}
-						variant="h4"
-					>
-						Add new person
-					</Typography>
-					<Autocomplete
-						value={value}
-						onChange={(event, newValue) => {
-							setValue(newValue);
-						}}
-						inputValue={inputValue}
-						onInputChange={(event, newInputValue) => {
-							setInputValue(newInputValue);
-						}}
-						id="controllable-states-timezone"
-						options={allTimeZonesArray}
-						sx={{ width: 300 }}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label="Timezone"
-							/>
-						)}
+				<Box
+					sx={{
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'flex-start',
+						gap: '10px 50px',
+						alignItems: 'center',
+						flexWrap: 'wrap',
+					}}
+				>
+					<Form
+						handleAddNewPerson={handleAddNewPerson}
+						isUpdating={false}
+						title="Add teammate"
+						allTimeZonesArray={allTimeZonesArray}
 					/>
-					<Box
-						sx={{
-							width: 400,
-							display: 'flex',
-							flexDirection: 'column',
-							gap: '15px',
-							marginTop: '20px',
-						}}
-					>
-						<TextField
-							variant="outlined"
-							label="Your name"
-							placeholder="Your name"
-							value={name}
-							onChange={(e) => {
-								setName(e.target.value);
-							}}
-						/>
-						<TextField
-							id="startTime"
-							label="Start Time"
-							variant="outlined"
-							value={startTime}
-							placeholder="Put when you start working, range 0-24"
-							onChange={(e) => {
-								setStartTime(e.target.value);
-							}}
-						/>
-						<TextField
-							id="endTime"
-							label="End Time"
-							variant="outlined"
-							placeholder="Put when you end working, range 0-24"
-							value={endTime}
-							onChange={(e) => {
-								setEndTime(e.target.value);
-							}}
-						/>
-					</Box>
-					<Button
-						onClick={() => handleAddNewPerson(false)}
-						sx={{
-							marginTop: '15px',
-							borderRadius: '4px',
-							background: '#7F77F1 !important',
-							display: 'flex',
-							padding: '9px 13px',
-							justifyContent: 'center',
-							alignItems: 'center',
-							gap: '10px',
-							color: '#FFF',
-							fontFamily: 'Inter',
-							fontSize: '12px',
-							fontStyle: 'normal',
-							fontWeight: 600,
-							lineHeight: 'normal',
-						}}
-					>
-						Add timezone
-					</Button>
-				</Box>
-				<Box sx={{ marginTop: '20px' }}>
-					<Typography
-						sx={{ marginBottom: '20px' }}
-						variant="h4"
-					>
-						Update info
-					</Typography>
-					<Autocomplete
-						value={value}
-						onChange={(event, newValue) => {
-							setValue(newValue);
-						}}
-						inputValue={inputValue}
-						onInputChange={(event, newInputValue) => {
-							setInputValue(newInputValue);
-						}}
-						id="controllable-states-timezone"
-						options={allTimeZonesArray}
-						sx={{ width: 300 }}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label="Timezone"
-							/>
-						)}
+					<Form
+						handleAddNewPerson={handleAddNewPerson}
+						isUpdating={true}
+						title="Update teammate"
+						allTimeZonesArray={allTimeZonesArray}
 					/>
-					<Box
-						sx={{
-							width: 400,
-							display: 'flex',
-							flexDirection: 'column',
-							gap: '15px',
-							marginTop: '20px',
-						}}
-					>
-						<TextField
-							variant="outlined"
-							label="Your name"
-							placeholder="Put the same name that you have"
-							value={name}
-							onChange={(e) => {
-								setName(e.target.value);
-							}}
-						/>
-						<TextField
-							id="startTime"
-							label="Start Time"
-							variant="outlined"
-							value={startTime}
-							placeholder="Put when you start working, range 0-24"
-							onChange={(e) => {
-								setStartTime(e.target.value);
-							}}
-						/>
-						<TextField
-							id="endTime"
-							label="End Time"
-							variant="outlined"
-							placeholder="Put when you end working, range 0-24"
-							value={endTime}
-							onChange={(e) => {
-								setEndTime(e.target.value);
-							}}
-						/>
-					</Box>
-					<Button
-						onClick={() => handleAddNewPerson(true)}
-						sx={{
-							marginTop: '15px',
-							borderRadius: '4px',
-							background: '#7F77F1 !important',
-							display: 'flex',
-							padding: '9px 13px',
-							justifyContent: 'center',
-							alignItems: 'center',
-							gap: '10px',
-							color: '#FFF',
-							fontFamily: 'Inter',
-							fontSize: '12px',
-							fontStyle: 'normal',
-							fontWeight: 600,
-							lineHeight: 'normal',
-						}}
-					>
-						Update info
-					</Button>
 				</Box>
 			</Box>
 		</Box>

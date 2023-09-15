@@ -17,6 +17,10 @@
 	box-sizing: border-box;
 }
 
+#root, #app {
+	background: #2A2E34;
+}
+
 html,
 body {
 	font-family: Inter, sans-serif;
