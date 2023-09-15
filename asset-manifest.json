@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/timezone-app/static/css/main.145a9c26.css",
-    "main.js": "/timezone-app/static/js/main.1b546528.js",
+    "main.css": "/timezone-app/static/css/main.650a318d.css",
+    "main.js": "/timezone-app/static/js/main.eb6ae34c.js",
     "static/js/787.9960360e.chunk.js": "/timezone-app/static/js/787.9960360e.chunk.js",
     "static/media/Inter-Bold.ttf": "/timezone-app/static/media/Inter-Bold.88fa7ae373b07b41ecce.ttf",
     "static/media/Inter-Regular.ttf": "/timezone-app/static/media/Inter-Regular.e89cb19905e7db5591b0.ttf",
     "index.html": "/timezone-app/index.html",
-    "main.145a9c26.css.map": "/timezone-app/static/css/main.145a9c26.css.map",
-    "main.1b546528.js.map": "/timezone-app/static/js/main.1b546528.js.map",
+    "main.650a318d.css.map": "/timezone-app/static/css/main.650a318d.css.map",
+    "main.eb6ae34c.js.map": "/timezone-app/static/js/main.eb6ae34c.js.map",
     "787.9960360e.chunk.js.map": "/timezone-app/static/js/787.9960360e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.145a9c26.css",
-    "static/js/main.1b546528.js"
+    "static/css/main.650a318d.css",
+    "static/js/main.eb6ae34c.js"
   ]
 }
