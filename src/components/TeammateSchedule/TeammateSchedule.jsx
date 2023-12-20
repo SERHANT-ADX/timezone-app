@@ -97,7 +97,13 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 						const nowInTargetTimezone = formatter.format(new Date()).toString();
 						const [localHours, localMinutes] = nowInTargetTimezone.split(':').map(Number);
 
-						const leftOffsetForMember = ((localHours * 60 + localMinutes) * 100) / (24 * 60);
+						const correctedLocalHours = localHours > 23 ? localHours - 24 : localHours;
+						const correctedLocalMinutes = localMinutes < 10 ? '0' + localMinutes : localMinutes;
+
+						const leftOffsetForMember = ((correctedLocalHours * 60 + Number(correctedLocalMinutes)) * 100) / (24 * 60);
+
+						const correctedLeftOffsetForMember =
+							leftOffsetForMember > 100 ? leftOffsetForMember - 100 : leftOffsetForMember;
 
 						return (
 							<Box
@@ -140,6 +146,7 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 									{scaleTimeList.map((scaleTime) => {
 										const timeDifference = localHours - new Date().getUTCHours();
 
+										const isEndMoreThanStart = +teammate.startWorkingHours >= teammate.endWorkingHours;
 										const adjustedStartWorkingHours = +teammate.startWorkingHours + +timeDifference;
 										const adjustedEndWorkingHours = +teammate.endWorkingHours + +timeDifference;
 
@@ -148,7 +155,8 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 
 										const betweenStartAndEnd =
 											adjustedScaleTimeStart >= Math.floor(adjustedStartWorkingHours) &&
-											adjustedScaleTimeEnd <= Math.ceil(adjustedEndWorkingHours);
+											adjustedScaleTimeEnd <=
+												Math.ceil(isEndMoreThanStart ? adjustedEndWorkingHours + 12 : adjustedEndWorkingHours);
 
 										const betweenStartAndEndColor = betweenStartAndEnd ? '#4B882E' : 'inherit';
 
@@ -167,7 +175,7 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 										sx={{
 											position: 'absolute',
 											top: '-50px',
-											left: leftOffsetForMember + '%',
+											left: correctedLeftOffsetForMember + '%',
 											zIndex: 10,
 											transform: 'translateX(-50%)',
 											borderRadius: '4px',
@@ -181,9 +189,9 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 											fontSize: '12px',
 										}}
 									>
-										{`${localHours}:${localMinutes < 10 ? '0' + localMinutes : localMinutes} ${
-											localHours >= 12 ? 'PM' : 'AM'
-										}`}
+										{`${
+											correctedLocalHours > 12 ? correctedLocalHours - 12 : correctedLocalHours
+										}:${correctedLocalMinutes} ${correctedLocalHours >= 12 ? 'PM' : 'AM'}`}
 									</Box>
 									<Box
 										id={'timeline' + teammate.name}
@@ -193,14 +201,14 @@ const TeammateSchedule = ({ teamList, addNewTeammate, updateTeammate }) => {
 											borderLeft: '1px dashed #49505B',
 											position: 'absolute',
 											top: '-50px',
-											left: leftOffsetForMember + '%',
+											left: correctedLeftOffsetForMember + '%',
 										}}
 									/>
 									<Box
 										sx={{
 											position: 'absolute',
 											top: '-4px',
-											left: leftOffsetForMember + '%',
+											left: correctedLeftOffsetForMember + '%',
 											zIndex: 10,
 											width: '14px',
 											height: '14px',
